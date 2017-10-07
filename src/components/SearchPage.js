@@ -16,7 +16,7 @@ class SearchPage extends Component {
         const queryString = e.target.elements.searchField.value;
 
         BooksAPI.search(queryString, 20).then( searchedBooks => {
-            
+
             if(!searchedBooks.error){
                 //searchedBooks.map(book => console.log(book.title,',',book.shelf));
                 this.setState({ 
@@ -35,7 +35,12 @@ class SearchPage extends Component {
 
     render(){
         const { searchedBooks, errorString } = this.state;
-        const { onShelfChange } = this.props;
+        const { onShelfChange, books } = this.props;
+
+        // If any of the books returned from the search is in any or our shelves,
+        // use the information from the shelf.
+        const booksToRender = searchedBooks.map(searchedBook => 
+            books.find( (book)=> book.id === searchedBook.id ) || searchedBook  );
 
         return(
              
@@ -58,7 +63,7 @@ class SearchPage extends Component {
                 (<div className="search-books-results">
                 <ol className="books-grid">
 
-                    { searchedBooks.map( book => <Book key={book.id} book={book} onShelfChange={onShelfChange} />) }
+                    { booksToRender.map( book => <Book key={book.id} book={book} onShelfChange={onShelfChange} />) }
 
                 </ol>
                 </div>) 
