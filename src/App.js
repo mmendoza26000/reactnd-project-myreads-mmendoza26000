@@ -22,8 +22,6 @@ class BooksApp extends React.Component {
   componentDidMount(){
     BooksAPI.getAll().then( books => {
       this.setState({ books });
-      books.map(book => console.log(book.title,',',book.imageLinks.smallThumbnail));
-      console.log('books:', books);
     });
 
   }

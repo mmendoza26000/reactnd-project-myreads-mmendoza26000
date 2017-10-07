@@ -7,7 +7,7 @@ class Book extends Component {
         const coverStyle = { 
             width: 128, 
             height: 193, 
-            backgroundImage: 'url(' + `${book.imageLinks.smallThumbnail}` + ')' 
+            backgroundImage: 'url(' + `${book.imageLinks.smallThumbnail}` + ')'  // eslint-disable-line no-useless-concat
         }
 
         return(
