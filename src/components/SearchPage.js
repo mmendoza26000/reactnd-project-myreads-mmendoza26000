@@ -1,7 +1,29 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import * as BooksAPI from '../BooksAPI';
+
+
 
 class SearchPage extends Component {
+
+    state={ searchedBooks : []};
+
+    handleSubmit = (e) => {
+        e.preventDefault();
+        const queryString = e.target.elements.searchField.value;
+
+        BooksAPI.search(queryString, 20).then( searchedBooks => {
+            
+            if(!searchedBooks.error){
+                searchedBooks.map(book => console.log(book.title,',',book.shelf));
+            } else {
+                console.log('Error in search', searchedBooks.error);
+            }
+
+        })
+
+        console.log('Search:', queryString);
+    }
 
     render(){
         return(
@@ -17,12 +39,17 @@ class SearchPage extends Component {
                   However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
                   you don't find a specific author or title. Every search is limited by search terms.
                 */}
-                <input type="text" placeholder="Search by title or author"/>
+                <form onSubmit={this.handleSubmit}>
+                    <input name="searchField" type="text" placeholder="Search by title or author"/>
+                </form>
 
               </div>
             </div>
             <div className="search-books-results">
-              <ol className="books-grid"></ol>
+              <ol className="books-grid">
+
+
+              </ol>
             </div>
           </div>
         )
