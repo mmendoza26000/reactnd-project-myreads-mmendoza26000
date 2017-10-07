@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import * as BooksAPI from '../BooksAPI';
 
-
+import Book from './Book';
 
 class SearchPage extends Component {
 
-    state={ searchedBooks : []};
+    state={ 
+        searchedBooks : [],
+        errorString : ''
+    };
 
     handleSubmit = (e) => {
         e.preventDefault();
@@ -15,17 +18,24 @@ class SearchPage extends Component {
         BooksAPI.search(queryString, 20).then( searchedBooks => {
             
             if(!searchedBooks.error){
-                searchedBooks.map(book => console.log(book.title,',',book.shelf));
+                //searchedBooks.map(book => console.log(book.title,',',book.shelf));
+                this.setState({ 
+                    searchedBooks,
+                    errorString : ''
+                });
             } else {
-                console.log('Error in search', searchedBooks.error);
+                this.setState({
+                    searchedBooks : [],
+                    errorString: 'The Search you entered is unsupported.'
+                })
             }
 
         })
-
-        console.log('Search:', queryString);
     }
 
     render(){
+        const { searchedBooks } = this.state;
+
         return(
             <div className="search-books">
             <div className="search-books-bar">
@@ -48,6 +58,7 @@ class SearchPage extends Component {
             <div className="search-books-results">
               <ol className="books-grid">
 
+                { searchedBooks.map( book => <Book key={book.id} book={book} />) }
 
               </ol>
             </div>
