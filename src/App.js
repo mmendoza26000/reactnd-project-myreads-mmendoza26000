@@ -27,9 +27,7 @@ class BooksApp extends React.Component {
   }
 
   onShelfChange = (newShelf, theBook) => {
-    console.log('Im in the app');
-    console.log(newShelf);
-    console.log(theBook.title);
+
     theBook.shelf = newShelf;
 
     BooksAPI.update(theBook, newShelf);
