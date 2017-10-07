@@ -34,8 +34,10 @@ class Book extends Component {
                 </div>
                 <div className="book-title">{book.title}</div>
                 
-                    {
-                        Object.values(book.authors).map( author => <div key={author} className="book-authors">{author}</div>)
+                    {   
+                        book.authors ?
+                            Object.values(book.authors).map( author => <div key={author} className="book-authors">{author}</div>)
+                        : null
                     }
 
                 

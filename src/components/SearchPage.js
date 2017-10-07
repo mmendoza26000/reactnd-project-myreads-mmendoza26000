@@ -8,29 +8,46 @@ class SearchPage extends Component {
 
     state={ 
         searchedBooks : [],
-        errorString : ''
+        errorString : '',
+        queryString: ''
     };
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const queryString = e.target.elements.searchField.value;
+    handleUserInput = (e) => {
+        //e.preventDefault();
+        const queryString = e.target.value;
 
-        BooksAPI.search(queryString, 20).then( searchedBooks => {
+        if(queryString.length > 0){
+            BooksAPI.search(queryString, 20).then( searchedBooks => {
 
-            if(!searchedBooks.error){
-                //searchedBooks.map(book => console.log(book.title,',',book.shelf));
+                if(!searchedBooks.error){
+                    //searchedBooks.map(book => console.log(book.title,',',book.shelf));
+                    this.setState({ 
+                        searchedBooks,
+                        errorString : '',
+                        queryString
+                    });
+                } else {
+                    this.setState({
+                        searchedBooks : [],
+                        errorString: 'The Search you entered is unsupported.',
+                        queryString
+                    });
+                }
+
+            }).catch(error=> {
                 this.setState({ 
-                    searchedBooks,
-                    errorString : ''
+                    searchedBooks: [],
+                    errorString : '',
+                    queryString
                 });
-            } else {
-                this.setState({
-                    searchedBooks : [],
-                    errorString: 'The Search you entered is unsupported.'
-                })
-            }
-
-        })
+                 })
+        } else {
+            this.setState({ 
+                searchedBooks: [],
+                errorString : '',
+                queryString
+            });
+        }
     }
 
     render(){
@@ -48,9 +65,13 @@ class SearchPage extends Component {
             <div className="search-books-bar">
               <Link className="close-search" to="/">Close</Link>
               <div className="search-books-input-wrapper">
-                <form onSubmit={this.handleSubmit}>
-                    <input name="searchField" type="text" placeholder="Search by title or author"/>
-                </form>
+                
+                    <input 
+                        name="searchField" 
+                        type="text" 
+                        placeholder="Search by title or author"
+                        onChange={this.handleUserInput} />
+                
 
               </div>
             </div>
