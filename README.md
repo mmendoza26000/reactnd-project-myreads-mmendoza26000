@@ -48,4 +48,9 @@ If your browser doesn't open automatically with the app, start your browser and 
 http://localhost:3000
 ```
 
+## Technical comments
+The shelves are defined as an object in the App's state, so it will be easier to add or remove shelves. Just add them in the state's object, and the rest of the App will handle the new shelves.
+
+This object could be created from the BooksAPI by fetching the server, if such method was implemented someday.
+
 
