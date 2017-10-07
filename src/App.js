@@ -1,5 +1,5 @@
 import React from 'react'
-// import * as BooksAPI from './BooksAPI'
+import * as BooksAPI from './BooksAPI'
 import './App.css'
 
 class BooksApp extends React.Component {
@@ -12,6 +12,23 @@ class BooksApp extends React.Component {
      */
     showSearchPage: false
   }
+
+  componentDidMount(){
+    BooksAPI.getAll().then( books => {
+      books.map(book => console.log(book.title,',',book.imageLinks.smallThumbnail));
+      console.log('books:', books);
+    });
+
+
+
+    BooksAPI.search('Shakespeare', 5).then( books => {
+      console.log('----------------');
+      books.map(book => console.log(book.title,',',book.shelf));
+      console.log('books:', books);
+    });
+
+  }
+
 
   render() {
     return (
