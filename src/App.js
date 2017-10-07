@@ -26,6 +26,16 @@ class BooksApp extends React.Component {
 
   }
 
+  onShelfChange = (newShelf, theBook) => {
+    console.log('Im in the app');
+    console.log(newShelf);
+    console.log(theBook.title);
+    theBook.shelf = newShelf;
+
+    this.setState( prevState => ({
+      books : prevState.books.filter(book => book.id !== theBook.id ).concat([theBook]) 
+    }))
+  }
 
   render() {
     return (
@@ -33,11 +43,14 @@ class BooksApp extends React.Component {
         <div className="app">
           
           <Route exact path="/" render={ () => 
-              <MainPage 
-                books={this.state.books}
-                shelves={this.state.shelves} />} />
+            <MainPage 
+              books={this.state.books}
+              shelves={this.state.shelves} 
+              onShelfChange={this.onShelfChange} />} />
 
-          <Route path="/search" component={SearchPage} />
+          <Route path="/search" render={ ()=>
+            <SearchPage
+              onShelfChange={this.onShelfChange} />} />
           
         </div>
       </BrowserRouter>

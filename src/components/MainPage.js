@@ -7,7 +7,7 @@ class MainPage extends Component{
 
     render(){
         
-        const { books, shelves } = this.props;
+        const { books, shelves, onShelfChange } = this.props;
 
         return(
             <div className="list-books">
@@ -18,7 +18,12 @@ class MainPage extends Component{
               <div>
                 {
                     Object.keys(shelves).map( shelf => 
-                        <Bookshelf key={shelf} name={shelf} title={shelves[shelf]} books={books} />                    
+                        <Bookshelf 
+                            key={shelf} 
+                            name={shelf} 
+                            title={shelves[shelf]} 
+                            books={books} 
+                            onShelfChange={onShelfChange} />                    
                     )
                 }
 

@@ -35,6 +35,7 @@ class SearchPage extends Component {
 
     render(){
         const { searchedBooks, errorString } = this.state;
+        const { onShelfChange } = this.props;
 
         return(
              
@@ -57,7 +58,7 @@ class SearchPage extends Component {
                 (<div className="search-books-results">
                 <ol className="books-grid">
 
-                    { searchedBooks.map( book => <Book key={book.id} book={book} />) }
+                    { searchedBooks.map( book => <Book key={book.id} book={book} onShelfChange={onShelfChange} />) }
 
                 </ol>
                 </div>) 
